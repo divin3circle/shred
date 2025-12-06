@@ -1,0 +1,80 @@
+# GoReleaser configuration for shred
+# See https://goreleaser.com for more information
+
+project_name: shred
+
+builds:
+  - id: shred
+    main: ./cmd/shred
+    binary: shred
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64 # Windows ARM64 is not commonly used
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+      - LICENSE
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+dockers:
+  - goos: linux
+    goarch: amd64
+    image_templates:
+      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}"
+      - "{{ .Env.DOCKER_USERNAME }}/shred:latest"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+
+  - goos: linux
+    goarch: arm64
+    image_templates:
+      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-arm64"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+
+release:
+  github:
+    owner: divin3circle
+    name: shred
+  mode: replace
+  header: |
+    ## What's Changed
+
+    Full Changelog: {{ .PreviousTag }}...{{ .Tag }}
