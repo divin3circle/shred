@@ -135,6 +135,7 @@ Once the application is running:
 2.  **Save Your Phrase**: Write down the 24 words on paper. **Do not lose them.**
 3.  **Verify**: Re-enter specific words to verify you saved them correctly.
 4.  **Set Password**: Create a strong password to encrypt your wallet file.
+5.  **Activate Account**: Hedera accounts after creation need to be funded by a small amount of HBAR < 1HBAR for the account to be activated. After creation submit an issue [here](https://github.com/divin3circle/shred/issues/new/choose) to receive some HBAR or get them from [https://portal.hedera.com/faucet](this faucet)
 
 **Controls:**
 
