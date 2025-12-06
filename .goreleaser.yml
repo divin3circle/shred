@@ -34,8 +34,6 @@ archives:
 checksum:
   name_template: "checksums.txt"
 
-# snapshot config removed - using defaults
-
 changelog:
   sort: asc
   filters:
@@ -49,7 +47,7 @@ dockers:
     image_templates:
       - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}"
       - "{{ .Env.DOCKER_USERNAME }}/shred:latest"
-      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-{{ .ShortCommit }}" # Snapshot builds
+      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-{{ .ShortCommit }}"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--platform=linux/amd64"
@@ -63,7 +61,7 @@ dockers:
     goarch: arm64
     image_templates:
       - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-arm64"
-      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-{{ .ShortCommit }}-arm64" # Snapshot builds
+      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-{{ .ShortCommit }}-arm64"
     dockerfile: Dockerfile
     build_flag_templates:
       - "--platform=linux/arm64"
