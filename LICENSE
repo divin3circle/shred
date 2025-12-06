@@ -1,0 +1,57 @@
+GNU AFFERO GENERAL PUBLIC LICENSE
+Version 3, 19 November 2007
+
+Copyright (C) 2024 Shred Wallet Contributors
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---
+
+ADDITIONAL COMMERCIAL USE RESTRICTIONS
+
+Notwithstanding the above, the following additional restrictions apply:
+
+1. COMMERCIAL USE PROHIBITION: You may not use this software, or any
+   derivative works based on this software, for commercial purposes,
+   including but not limited to:
+   - Selling the software or services based on it
+   - Using it in a commercial product or service
+   - Monetizing any derivative works
+   - Using it to generate revenue, directly or indirectly
+
+2. EXCEPTION FOR AUTHORIZED USE: The above commercial use prohibition
+   does not apply if you have obtained explicit written permission from
+   the copyright holder(s) of this software.
+
+3. DEFINITION OF COMMERCIAL USE: For the purposes of this license,
+   "commercial purposes" means any use that is intended for or results in
+   commercial advantage or monetary compensation, whether direct or indirect.
+
+4. OPEN SOURCE EXCEPTION: This restriction does not apply to:
+   - Personal, non-commercial use
+   - Educational use
+   - Research and development
+   - Contributions back to the open source project
+
+5. ENFORCEMENT: Violation of these commercial use restrictions will result
+   in termination of your rights under this license.
+
+If you wish to use this software for commercial purposes, please contact
+the copyright holder(s) to obtain a separate commercial license.
+
+---
+
+For the full text of the GNU Affero General Public License v3, please visit:
+https://www.gnu.org/licenses/agpl-3.0.html
+
