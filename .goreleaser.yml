@@ -76,7 +76,6 @@ release:
     owner: divin3circle
     name: shred
   mode: replace
-  skip: "{{ .IsSnapshot }}"
   header: |
     ## What's Changed
 
