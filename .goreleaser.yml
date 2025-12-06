@@ -18,7 +18,7 @@ builds:
       - arm64
     ignore:
       - goos: windows
-        goarch: arm64 # Windows ARM64 is not commonly used
+        goarch: arm64
     env:
       - CGO_ENABLED=0
 
@@ -49,6 +49,7 @@ dockers:
     image_templates:
       - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}"
       - "{{ .Env.DOCKER_USERNAME }}/shred:latest"
+      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-{{ .ShortCommit }}" # Snapshot builds
     dockerfile: Dockerfile
     build_flag_templates:
       - "--platform=linux/amd64"
@@ -56,11 +57,13 @@ dockers:
       - "--label=org.opencontainers.image.title={{.ProjectName}}"
       - "--label=org.opencontainers.image.revision={{.FullCommit}}"
       - "--label=org.opencontainers.image.version={{.Version}}"
+    skip_push: false
 
   - goos: linux
     goarch: arm64
     image_templates:
       - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-arm64"
+      - "{{ .Env.DOCKER_USERNAME }}/shred:{{ .Tag }}-{{ .ShortCommit }}-arm64" # Snapshot builds
     dockerfile: Dockerfile
     build_flag_templates:
       - "--platform=linux/arm64"
@@ -68,12 +71,14 @@ dockers:
       - "--label=org.opencontainers.image.title={{.ProjectName}}"
       - "--label=org.opencontainers.image.revision={{.FullCommit}}"
       - "--label=org.opencontainers.image.version={{.Version}}"
+    skip_push: false
 
 release:
   github:
     owner: divin3circle
     name: shred
   mode: replace
+  skip: "{{ .IsSnapshot }}"
   header: |
     ## What's Changed
 

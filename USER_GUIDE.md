@@ -4,36 +4,63 @@ Welcome to **Shred**, the terminal-native Hedera wallet. This guide will help yo
 
 ## 📥 Download
 
-Visit our official website to download the latest version for your operating system:
-**[https://your-website.com/download](https://your-website.com/download)**
+Download the latest release from the [GitHub Releases](https://github.com/divin3circle/shred/releases) page.
 
 Choose the correct file for your system:
 
-| Operating System | File Name |
-| :--- | :--- |
-| **macOS (Apple Silicon M1/M2/M3)** | `shred-mac-arm64.zip` |
-| **macOS (Intel)** | `shred-mac-intel.zip` |
-| **Windows** | `shred-windows.zip` |
-| **Linux** | `shred-linux-amd64.zip` |
+| Operating System                   | File Name                             |
+| :--------------------------------- | :------------------------------------ |
+| **macOS (Apple Silicon M1/M2/M3)** | `shred_{version}_darwin_arm64.tar.gz` |
+| **macOS (Intel)**                  | `shred_{version}_darwin_amd64.tar.gz` |
+| **Windows**                        | `shred_{version}_windows_amd64.zip`   |
+| **Linux (AMD64)**                  | `shred_{version}_linux_amd64.tar.gz`  |
+| **Linux (ARM64)**                  | `shred_{version}_linux_arm64.tar.gz`  |
+
+**Note:** After extracting the archive, you'll find a binary named `shred` (or `shred.exe` on Windows).
 
 ---
 
 ## 🍎 macOS Installation
 
-1.  **Extract the file**: Double-click the downloaded `.zip` file.
-2.  **Open Terminal**: Press `Cmd + Space`, type `Terminal`, and press Enter.
-3.  **Navigate to the folder**:
+1.  **Download** the appropriate file for your Mac:
+
+    - Apple Silicon (M1/M2/M3): `shred_{version}_darwin_arm64.tar.gz`
+    - Intel: `shred_{version}_darwin_amd64.tar.gz`
+
+2.  **Extract the archive**: Double-click the downloaded `.tar.gz` file, or in Terminal:
+
+    ```bash
+    cd ~/Downloads
+    tar -xzf shred_*_darwin_*.tar.gz
+    ```
+
+3.  **Open Terminal**: Press `Cmd + Space`, type `Terminal`, and press Enter.
+
+4.  **Navigate to the extracted folder**:
+
     ```bash
     cd ~/Downloads
     ```
-4.  **Make it executable** (only needed once):
+
+5.  **Make it executable**:
+
     ```bash
-    chmod +x shred-mac-arm64  # or shred-mac-intel
+    chmod +x shred
     ```
-5.  **Run the app**:
+
+6.  **Run the app**:
+
     ```bash
-    ./shred-mac-arm64
+    ./shred
     ```
+
+    **Optional:** Move to a location in your PATH for easier access:
+
+```bash
+sudo mv shred /usr/local/bin/
+```
+
+Then you can run `shred` from anywhere.
 
 > **Security Warning?**
 > If you see "Unidentified Developer", go to **System Settings > Privacy & Security** and click **Open Anyway**. Alternatively, right-click the file in Finder and select **Open**.
@@ -42,15 +69,22 @@ Choose the correct file for your system:
 
 ## 🪟 Windows Installation
 
-1.  **Extract the file**: Right-click the `.zip` file and select **Extract All**.
-2.  **Open PowerShell**: Press `Win + X` and select **Terminal** or **PowerShell**.
-3.  **Navigate to the folder**:
+1.  **Download** `shred_{version}_windows_amd64.zip`
+
+2.  **Extract the file**: Right-click the `.zip` file and select **Extract All**.
+
+3.  **Open PowerShell**: Press `Win + X` and select **Terminal** or **PowerShell**.
+
+4.  **Navigate to the extracted folder**:
+
     ```powershell
-    cd Downloads\shred-windows
+    cd Downloads
+    cd shred_*_windows_amd64
     ```
-4.  **Run the app**:
+
+5.  **Run the app**:
     ```powershell
-    .\shred-windows.exe
+    .\shred.exe
     ```
 
 > **Windows Protected Your PC?**
@@ -60,18 +94,36 @@ Choose the correct file for your system:
 
 ## 🐧 Linux Installation
 
-1.  **Extract the file**:
+1.  **Download** the appropriate file:
+
+    - AMD64: `shred_{version}_linux_amd64.tar.gz`
+    - ARM64: `shred_{version}_linux_arm64.tar.gz`
+
+2.  **Extract the archive**:
+
     ```bash
-    unzip shred-linux-amd64.zip
+    tar -xzf shred_*_linux_*.tar.gz
     ```
-2.  **Make it executable**:
+
+3.  **Make it executable**:
+
     ```bash
-    chmod +x shred-linux-amd64
+    chmod +x shred
     ```
-3.  **Run the app**:
+
+4.  **Run the app**:
+
     ```bash
-    ./shred-linux-amd64
+    ./shred
     ```
+
+    **Optional:** Install system-wide:
+
+```bash
+sudo mv shred /usr/local/bin/
+```
+
+Then you can run `shred` from anywhere.
 
 ---
 
@@ -85,7 +137,8 @@ Once the application is running:
 4.  **Set Password**: Create a strong password to encrypt your wallet file.
 
 **Controls:**
-*   `↑/↓` or `j/k`: Navigate menus
-*   `Enter`: Select / Confirm
-*   `Esc`: Go Back
-*   `q`: Quit
+
+- `↑/↓` or `j/k`: Navigate menus
+- `Enter`: Select / Confirm
+- `Esc`: Go Back
+- `q`: Quit
