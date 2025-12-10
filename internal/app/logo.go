@@ -15,22 +15,19 @@ const shredLogo = `
 
 const shredTagline = "Secure Hedera Terminal Wallet"
 
-// GetStyledLogo returns the SHRED logo with gradient styling
 func GetStyledLogo() string {
-	// Create a gradient style for the logo
 	logoStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#FFA500")). // Orange
+		Foreground(lipgloss.Color("#FFA500")).
 		Bold(true)
 
 	taglineStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#888888")).
 		Italic(true)
 
-	return logoStyle.Render(shredLogo) + "\n" + 
+	return logoStyle.Render(shredLogo) + "\n" +
 		lipgloss.NewStyle().Width(50).Align(lipgloss.Center).Render(taglineStyle.Render(shredTagline))
 }
 
-// Alternative simple logo for smaller terminals
 const shredLogoSimple = `
   ____  _   _ ____  _____ ____  
  / ___|| | | |  _ \| ____|  _ \ 
@@ -39,7 +36,6 @@ const shredLogoSimple = `
  |____/|_| |_|_| \_\_____|____/ 
 `
 
-// GetSimpleLogo returns a simpler ASCII logo for terminals with limited space
 func GetSimpleLogo() string {
 	logoStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#00D4FF")).
@@ -48,7 +44,6 @@ func GetSimpleLogo() string {
 	return logoStyle.Render(shredLogoSimple)
 }
 
-// Alternative block-style logo (similar to LazyVim)
 const shredLogoBlock = `
  ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄   
 ▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░▌  
@@ -63,16 +58,13 @@ const shredLogoBlock = `
  ▀▀▀▀▀▀▀▀▀▀▀  ▀         ▀  ▀         ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀   
 `
 
-// GetBlockLogo returns a block-style logo similar to LazyVim
 func GetBlockLogo() string {
-	// Create gradient colors for different parts
 	topStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#00D4FF"))
 
 	bottomStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#0080FF"))
 
-	// Split logo into lines and apply gradient
 	lines := []string{
 		" ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄   ",
 		"▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░▌  ",
