@@ -14,6 +14,8 @@ import (
 	sdk "github.com/hiero-ledger/hiero-sdk-go/v2/sdk"
 )
 
+type tickMsg time.Time
+
 type refreshAccountMsg struct {
 	AccountID    string
 	Balance      string
@@ -24,6 +26,12 @@ type refreshAccountMsg struct {
 type walletsFoundMsg struct {
 	Wallets []crypto.WalletInfo
 	Error   error
+}
+
+func tickCmd() tea.Cmd {
+	return tea.Tick(time.Second, func(t time.Time) tea.Msg {
+		return tickMsg(t)
+	})
 }
 
 func checkForWallets() tea.Msg {

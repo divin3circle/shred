@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/divin3circle/shred/internal/crypto"
@@ -23,6 +24,10 @@ var (
 	styleSubTitle = lipgloss.NewStyle().
 			Foreground(lipgloss.Color("240")).
 			Bold(true)
+
+	taglineStyle = lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#888888")).
+		Italic(true)
 )
 
 func (m Model) viewWelcome() string {
@@ -67,25 +72,35 @@ No wallets found.
 		}
 
 		evmDisplay := wallet.EVMAddress
+		walletFileName := wallet.FileName[:10] + "...." + wallet.FileName[len(wallet.FileName)-10:]
 		if len(evmDisplay) > 20 {
 			evmDisplay = evmDisplay[:10] + "..." + evmDisplay[len(evmDisplay)-8:]
 		}
 
 		status := "Unverified"
 		if wallet.AccountID != "" {
-			status = wallet.AccountID
+			status = wallet.AccountID + "(verified)"
 		}
 
-		walletList.WriteString(fmt.Sprintf("%s[%d] %s\n", cursor, i+1, wallet.FileName))
-		walletList.WriteString(fmt.Sprintf("    EVM: %s\n", evmDisplay))
-		walletList.WriteString(fmt.Sprintf("    Status: %s\n\n", status))
+		walletList.WriteString(fmt.Sprintf("%s[%d]\nWallet Name:%s\n", cursor, i+1, walletFileName))
+		walletList.WriteString(fmt.Sprintf("Wallet Address: 0x%s\n", evmDisplay))
+		walletList.WriteString(fmt.Sprintf("Status: %s\n\n", status))
 	}
+
+	currentDate := time.Now().Format(time.UnixDate)
+
+	footer := fmt.Sprintf("%s \t Network: Testnet", currentDate)
 
 	content := fmt.Sprintf(`
 %s
 
 [↑↓] Navigate  [Enter] Select  [N] New Wallet  [Q] Quit
-`, walletList.String())
+
+
+
+%s
+
+`, walletList.String(), taglineStyle.Render(footer))
 
 	boxedContent := styleBox.Render(content)
 	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
