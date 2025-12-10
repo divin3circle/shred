@@ -11,17 +11,18 @@ import (
 
 var (
 	styleBox = lipgloss.NewStyle().
-		Border(lipgloss.RoundedBorder()).
-		Padding(1, 2).
-		BorderForeground(lipgloss.Color("62"))
-		
+			Padding(1, 2).
+			Height(30)
+
 	styleTitle = lipgloss.NewStyle().
-		Foreground(lipgloss.Color("205")).
-		Bold(true)
+			Foreground(lipgloss.Color("#FFA500")).
+			Bold(true).
+			Align(lipgloss.Center).
+			Width(80)
 
 	styleSubTitle = lipgloss.NewStyle().
-		Foreground(lipgloss.Color("240")).
-		Bold(true)
+			Foreground(lipgloss.Color("240")).
+			Bold(true)
 )
 
 func (m Model) viewWelcome() string {
@@ -33,14 +34,16 @@ No wallet found. Create or import?
 [N] Create new wallet
 [I] Import seed phrase
 [Q] Quit
-`, styleTitle.Render("Welcome to hsh — Hedera Shell"))
+`, GetStyledLogo())
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewWalletList() string {
 	var walletList strings.Builder
-	
+
 	if len(m.AvailableWallets) == 0 {
 		content := fmt.Sprintf(`
 %s
@@ -49,11 +52,12 @@ No wallets found.
 
 [N] Create new wallet
 [Q] Quit
-`, styleTitle.Render("Select Wallet"))
-		return styleBox.Render(content)
+`, GetStyledLogo())
+		boxedContent := styleBox.Render(content)
+		return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 	}
 
-	walletList.WriteString(fmt.Sprintf("%s\n\n", styleTitle.Render("Select Wallet")))
+	walletList.WriteString(fmt.Sprintf("%s\n\n", GetStyledLogo()))
 	walletList.WriteString("Available wallets:\n\n")
 
 	for i, wallet := range m.AvailableWallets {
@@ -83,7 +87,8 @@ No wallets found.
 [↑↓] Navigate  [Enter] Select  [N] New Wallet  [Q] Quit
 `, walletList.String())
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewWalletUnlock() string {
@@ -110,7 +115,8 @@ Enter passphrase:
 [Enter] Unlock  [Esc] Back
 `, styleTitle.Render("Unlock Wallet"), walletInfo.FileName, evmDisplay, m.Input.View())
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewCreate() string {
@@ -132,7 +138,8 @@ Write down these 24 words. They are the ONLY way to recover your funds.
 [Enter] I have written them down
 `, styleTitle.Render("Secret Recovery Phrase"), wordsView.String())
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewVerify() string {
@@ -146,7 +153,8 @@ Enter word #%d:
 %s
 `, styleTitle.Render("Verify Phrase"), targetIndex+1, m.Input.View())
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewPassword() string {
@@ -154,7 +162,7 @@ func (m Model) viewPassword() string {
 	if m.ErrorMessage != "" {
 		errorMsg = fmt.Sprintf("\n⚠️  %s\n", m.ErrorMessage)
 	}
-	
+
 	content := fmt.Sprintf(`
 %s
 
@@ -163,7 +171,8 @@ Set a strong passphrase to encrypt your wallet on disk.%s
 %s
 `, styleTitle.Render("Set Passphrase"), errorMsg, m.Input.View())
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewDashboard() string {
@@ -182,7 +191,7 @@ Balance: %s
 EVM Alias: %s%s
 
 [s] Send   [r] Receive   [t] Tokens   [f] Refresh   [h] History   [q] Quit
-`, styleTitle.Render("shred Dashboard") + "\n" + styleSubTitle.Render("Network: Testnet"), m.AccountID, m.Balance, m.EVMAddress, statusLine)
+`, styleTitle.Render("shred Dashboard")+"\n"+styleSubTitle.Render("Network: Testnet"), m.AccountID, m.Balance, m.EVMAddress, statusLine)
 
 	if len(m.TokenBalances) > 0 {
 		content += "\nTokens:\n"
@@ -197,7 +206,8 @@ EVM Alias: %s%s
 		}
 	}
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewReceive() string {
@@ -227,7 +237,8 @@ func (m Model) viewReceive() string {
 
 	content.WriteString("\n\n[c] Copy Account ID  [e] Copy EVM Address  [Esc] Back\n")
 
-	return styleBox.Render(content.String())
+	boxedContent := styleBox.Render(content.String())
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewTokenMenu() string {
@@ -255,37 +266,39 @@ func (m Model) viewTokenMenu() string {
 	content.WriteString("\n" + m.Input.View() + "\n")
 	content.WriteString("\n[↑↓] Navigate  [Enter] Save Alias  [Esc] Back\n")
 
-	return styleBox.Render(content.String())
+	boxedContent := styleBox.Render(content.String())
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewSendSelectToken() string {
 	var content strings.Builder
 	content.WriteString(styleTitle.Render("Send Funds - Select Asset") + "\n\n")
-	
+
 	cursor := "  "
 	if m.SelectedTokenIndex == 0 {
 		cursor = "→ "
 	}
 	content.WriteString(fmt.Sprintf("%sHBAR (Balance: %s)\n", cursor, m.Balance))
-	
+
 	for i, token := range m.TokenBalances {
 		cursor = "  "
 		if i+1 == m.SelectedTokenIndex {
 			cursor = "→ "
 		}
-		
+
 		alias := ""
 		if m.TokenAliases != nil {
 			if a, ok := m.TokenAliases[token.TokenID]; ok {
 				alias = fmt.Sprintf(" (%s)", a)
 			}
 		}
-		
+
 		content.WriteString(fmt.Sprintf("%s%s: %d%s\n", cursor, token.TokenID, token.Balance, alias))
 	}
-	
+
 	content.WriteString("\n[↑↓] Navigate  [Enter] Select  [Esc] Cancel\n")
-	return styleBox.Render(content.String())
+	boxedContent := styleBox.Render(content.String())
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewSendRecipient() string {
@@ -293,7 +306,7 @@ func (m Model) viewSendRecipient() string {
 	if m.SendError != "" {
 		errorMsg = fmt.Sprintf("\n⚠️  %s\n", m.SendError)
 	}
-	
+
 	assetName := "HBAR"
 	if m.SendSelectedToken.TokenID != "" {
 		assetName = m.SendSelectedToken.TokenID
@@ -303,7 +316,7 @@ func (m Model) viewSendRecipient() string {
 			}
 		}
 	}
-	
+
 	content := fmt.Sprintf(`
 %s
 
@@ -315,13 +328,14 @@ Enter Recipient (Account ID or EVM Address):
 [Enter] Next  [Esc] Back
 `, styleTitle.Render("Send Funds - Recipient"), assetName, m.Input.View(), errorMsg)
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewSendAmount() string {
 	assetName := "HBAR"
 	maxAmount := m.Balance
-	
+
 	if m.SendSelectedToken.TokenID != "" {
 		assetName = m.SendSelectedToken.TokenID
 		if m.TokenAliases != nil {
@@ -331,7 +345,7 @@ func (m Model) viewSendAmount() string {
 		}
 		maxAmount = fmt.Sprintf("%d", m.SendSelectedToken.Balance)
 	}
-	
+
 	content := fmt.Sprintf(`
 %s
 
@@ -345,7 +359,8 @@ Enter Amount:
 [Enter] Next  [Esc] Back
 `, styleTitle.Render("Send Funds - Amount"), assetName, m.SendRecipient, maxAmount, m.Input.View())
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewSendConfirm() string {
@@ -353,7 +368,7 @@ func (m Model) viewSendConfirm() string {
 	if m.SendError != "" {
 		errorMsg = fmt.Sprintf("\n⚠️  %s\n", m.SendError)
 	}
-	
+
 	assetName := "HBAR"
 	if m.SendSelectedToken.TokenID != "" {
 		assetName = m.SendSelectedToken.TokenID
@@ -363,7 +378,7 @@ func (m Model) viewSendConfirm() string {
 			}
 		}
 	}
-	
+
 	content := fmt.Sprintf(`
 %s
 
@@ -378,7 +393,8 @@ Memo:      Sent via shred
 [Y/Enter] Confirm & Sign  [Esc] Back
 `, styleTitle.Render("Send Funds - Confirmation"), assetName, m.SendAmount, m.SendRecipient, errorMsg)
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewSendSigning() string {
@@ -386,7 +402,7 @@ func (m Model) viewSendSigning() string {
 	if m.SendError != "" {
 		errorMsg = fmt.Sprintf("\n⚠️  %s\n", m.SendError)
 	}
-	
+
 	content := fmt.Sprintf(`
 %s
 
@@ -397,7 +413,8 @@ Enter your wallet passphrase to sign the transaction:
 [Enter] Sign & Send  [Esc] Cancel
 `, styleTitle.Render("Sign Transaction"), m.Input.View(), errorMsg)
 
-	return styleBox.Render(content)
+	boxedContent := styleBox.Render(content)
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
 
 func (m Model) viewHistory() string {
@@ -414,19 +431,19 @@ func (m Model) viewHistory() string {
 		for _, tx := range m.HistoryTransactions {
 			parts := strings.Split(tx.ConsensusTimestamp, ".")
 			tsStr := parts[0]
-			
+
 			var amount int64
 			for _, transfer := range tx.Transfers {
 				if transfer.Account == m.AccountID {
 					amount += transfer.Amount
 				}
 			}
-			
+
 			amountStr := fmt.Sprintf("%d tℏ", amount)
 			if amount > 0 {
 				amountStr = "+" + amountStr
 			}
-			
+
 			memo := ""
 			if tx.MemoBase64 != "" {
 				memo = " (Memo)"
@@ -442,5 +459,6 @@ func (m Model) viewHistory() string {
 	}
 	content.WriteString("[Esc] Back\n")
 
-	return styleBox.Render(content.String())
+	boxedContent := styleBox.Render(content.String())
+	return lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, boxedContent)
 }
