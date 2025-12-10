@@ -93,7 +93,10 @@ func NewModel() Model {
 }
 
 func (m Model) Init() tea.Cmd {
-	return checkForWallets
+	return tea.Batch(
+		checkForWallets,
+		tickCmd(),
+	)
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -124,6 +127,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	}
 
 	switch msg := msg.(type) {
+	case tickMsg:
+		// Time to update the clock - return next tick command
+		return m, tickCmd()
 	case walletsFoundMsg:
 		if msg.Error != nil {
 			m.State = StateWelcome
@@ -208,5 +214,5 @@ func (m Model) View() string {
 	case StateHistory:
 		return m.viewHistory()
 	}
-	return "Unknown State"
+	return "You have been logged out. Press ctrl+c to quit."
 }
