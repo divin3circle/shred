@@ -31,52 +31,52 @@ const (
 )
 
 type Model struct {
-	State        SessionState
-	Width        int
-	Height       int
-	
-	Mnemonic     []byte
-	Wallet       *crypto.Wallet
-	
-	Input        textinput.Model
-	
-	MnemonicWords []string
-	VerifyIndices []int
+	State  SessionState
+	Width  int
+	Height int
+
+	Mnemonic []byte
+	Wallet   *crypto.Wallet
+
+	Input textinput.Model
+
+	MnemonicWords      []string
+	VerifyIndices      []int
 	CurrentVerifyIndex int
-	
+
 	LastActivity time.Time
-	
+
 	HederaClient *hedera_client.Client
 	Balance      string
 	AccountID    string
 	EVMAddress   string
-	
+
 	TokenBalances []hedera_client.TokenBalance
 	TokenAliases  map[string]string
-	
+
 	SelectedTokenIndex int
 	TokenListCursor    int
-	
+
 	SendSelectedToken hedera_client.TokenBalance
 	SendRecipient     string
 	SendAmount        string
 	SendMemo          string
 	SendError         string
 	SendSuccess       string
-	
+
 	HistoryTransactions []hedera_client.MirrorTransaction
 	HistoryNextURL      string
 	HistoryPrevURLs     []string
 	HistoryIsLoading    bool
 	HistoryError        string
-	
+
 	IsRefreshing bool
 	RefreshError string
-	
-	AvailableWallets []crypto.WalletInfo
+
+	AvailableWallets    []crypto.WalletInfo
 	SelectedWalletIndex int
-	SelectedWalletPath string
-	
+	SelectedWalletPath  string
+
 	ErrorMessage string
 }
 
